@@ -3,7 +3,6 @@
 #include <ctype.h>
 #include "types.h"
 
-
 no_arvore* criar_arvore(lista_t* lista) {
     if(!lista) {
         printf("Parametro lista invalido.");
@@ -37,20 +36,6 @@ no_arvore* criar_arvore(lista_t* lista) {
 
 I8 eh_folha(no_arvore* raiz) {
     return(raiz->esquerda==NULL && raiz->direita==NULL);
-}
-
-void print_arvore(no_arvore* raiz, I8 altura) {
-    if(raiz == NULL) {
-        return;
-    }
-    
-    if(eh_folha(raiz)) {
-        printf("Folha: %c, Altura: %d\n", (U8)raiz->informacao.byte, altura);
-    }
-    else {
-        print_arvore(raiz->esquerda, altura + 1);
-        print_arvore(raiz->direita, altura + 1);
-    }
 }
 
 void verificar_arvore(no_arvore* raiz) {

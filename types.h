@@ -57,22 +57,18 @@ typedef struct {
 Tabela_de_frequencias* nova_tabela_de_frequencias ();
 boolean inclua_byte (U8 byte, Tabela_de_frequencias* tab /* por referencia */);
 void junte_nodos_no_inicio_do_vetor (Tabela_de_frequencias* tab /* por referencia */);
-void print_tabela_frequencias(Tabela_de_frequencias* tab);
 
-void print_lista(lista_t* lista);
 lista_t* criar_lista_encadeada(Tabela_de_frequencias* tabela);
 void inserir_ordenado(lista_t** lista, no_arvore* nodo);
 no_arvore* remover_primeiro_no_lista(lista_t** lista);
 no_arvore* criar_no(elemento_t* elemento);
 
 no_arvore* criar_arvore(lista_t* lista);
-void print_arvore(no_arvore* raiz, I8 altura);
 I8 eh_folha(no_arvore* raiz);
 void verificar_arvore(no_arvore* raiz);
 
 Codigo** alocar_dicionario();
 void gerar_dicionario(Codigo** dicionario_alocado, no_arvore* raiz, Codigo codigo_atual);
-void verificar_dicionario(Codigo** dicionario);
 void liberar_dicionario(Codigo** dicionario);
 
 boolean novo_codigo (Codigo* c);
@@ -86,3 +82,7 @@ void decodificar(FILE* arquivo_codificado, FILE* arquivo_decodificado);
 
 void liberar_arvore(no_arvore* raiz);
 void liberar_dicionario(Codigo** dicionario);
+
+void limpeza_completa(U8* dados, Tabela_de_frequencias* tab, lista_t* lista, no_arvore* arvore,Codigo** dicionario, Codigo* codigo);
+char* argumentos_terminal(int argc, char** argv, char** nome_arquivo_original, char** nome_arquivo_saida);
+

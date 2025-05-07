@@ -77,14 +77,3 @@ void junte_nodos_no_inicio_do_vetor (Tabela_de_frequencias* tab )
     }
 }
 
-void print_tabela_frequencias(Tabela_de_frequencias* tab){
-    if(tab) {
-        for(U16 i=0; i<256; i++) {
-            no_arvore* no_atual = tab->vetor[i];
-            if (no_atual != NULL) {
-                printf("vetor[%d] = Byte: 0x%02X [%lu] \n", i, no_atual->informacao.byte, no_atual->informacao.frequencia);
-            }
-        }
-    }
-    return;
-}

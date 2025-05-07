@@ -19,20 +19,15 @@ void codificar(FILE* arquivo_entrada, FILE* arquivo_saida, Codigo** dicionario) 
     int bits_no_byte = 0;
     U32 total_bits_escritos = 0;
 
-    printf("[DEBUG-CODIFICAR] Iniciando escrita do dicionário.\n");
-
     for (int i = 0; i < 256; i++) {
         fwrite(&i, 1, 1, arquivo_saida); 
         if (dicionario[i] && dicionario[i]->tamanho > 0) {
             U16 tamanho = (U16)dicionario[i]->tamanho;
             fwrite(&tamanho, 2, 1, arquivo_saida);
             fwrite(dicionario[i]->byte, (tamanho + 7) / 8, 1, arquivo_saida);
-            printf("[DEBUG-CODIFICAR] Escrevendo código para byte 0x%02X (%c), tamanho: %u\n",
-                   i, isprint(i) ? i : '.', tamanho);
         } else {
             U16 tamanho_zero = 0;
             fwrite(&tamanho_zero, 2, 1, arquivo_saida);
-            printf("[DEBUG-CODIFICAR] Byte 0x%02X não tem código (tamanho 0).\n", i);
         }
     }
 
@@ -40,12 +35,10 @@ void codificar(FILE* arquivo_entrada, FILE* arquivo_saida, Codigo** dicionario) 
     U16 tamanho_fim = 0xFFFF;
     fwrite(&fim_dicionario, 1, 1, arquivo_saida);
     fwrite(&tamanho_fim, 2, 1, arquivo_saida);
-    printf("[DEBUG-CODIFICAR] Marcador de fim do dicionário escrito.\n");
 
     long pos_total_bits = ftell(arquivo_saida);
     fwrite(&total_bits_escritos, sizeof(U32), 1, arquivo_saida); 
 
-    printf("[DEBUG-CODIFICAR] Iniciando escrita dos dados codificados.\n");
 
     while (fread(&byte_lido, 1, 1, arquivo_entrada) == 1) {
         Codigo* codigo = dicionario[byte_lido];
@@ -74,6 +67,4 @@ void codificar(FILE* arquivo_entrada, FILE* arquivo_saida, Codigo** dicionario) 
     fwrite(&total_bits_escritos, sizeof(U32), 1, arquivo_saida);
     fseek(arquivo_saida, pos_fim, SEEK_SET);
 
-    printf("[DEBUG-CODIFICAR] Total de bits escritos: %u\n", total_bits_escritos);
-    printf("[DEBUG-CODIFICAR] Escrita dos dados codificados concluída.\n");
 }

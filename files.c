@@ -108,3 +108,4 @@ char* setar_novo_nome(const char* nome_arquivo, const char* extensao_desejada) {
     strcpy(novo_nome + j, extensao_desejada);
     return novo_nome;
 }
+

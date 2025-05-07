@@ -43,24 +43,6 @@ void gerar_dicionario(Codigo** dicionario_alocado, no_arvore* raiz, Codigo codig
     free_codigo(&codigo_direita);
 }
 
-void verificar_dicionario(Codigo** dicionario) {
-    if (!dicionario) return;
-
-    printf("\n=== Verificando Dicionario ===\n");
-    for (int i = 0; i < 256; i++) {
-        if (dicionario[i] && dicionario[i]->tamanho > 0) {
-            printf("Byte 0x%02X (%c): ", i, isprint(i) ? i : '.');
-            for (int j = 0; j < dicionario[i]->tamanho; j++) {
-                U8 byte_index = j / 8;
-                U8 bit_offset = j % 8;
-                U8 bit = (dicionario[i]->byte[byte_index] >> (7 - bit_offset)) & 1;
-                printf("%d", bit);
-            }
-            printf("\n");
-        }
-    }
-}
-
 void liberar_dicionario(Codigo** dicionario) {
     if (!dicionario) return;
 

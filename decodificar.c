@@ -56,8 +56,6 @@ no_arvore* reconstruir_arvore(FILE* arquivo_codificado, U32* total_bits) {
     U8 byte_lido;
     U16 tamanho_codigo;
 
-    printf("[DEBUG-DECODIFICAR] Iniciando reconstrução da árvore.\n");
-
     for (int i = 0; i < 256; i++) {
         fread(&byte_lido, 1, 1, arquivo_codificado);
         fread(&tamanho_codigo, 2, 1, arquivo_codificado);
@@ -83,7 +81,6 @@ no_arvore* reconstruir_arvore(FILE* arquivo_codificado, U32* total_bits) {
 
     fread(total_bits, sizeof(U32), 1, arquivo_codificado);
 
-    printf("[DEBUG-DECODIFICAR] Reconstrução concluída. Total de bits: %u\n", *total_bits);
     return raiz;
 }
 
@@ -108,7 +105,6 @@ void decodificar(FILE* arquivo_codificado, FILE* arquivo_decodificado) {
     int bits_restantes = 0;
     U32 bits_lidos = 0;
 
-    printf("[DEBUG-DECODIFICAR] Iniciando decodificação dos dados.\n");
 
     while (bits_lidos < total_bits) {
         int bit = ler_bit(arquivo_codificado, &byte_atual, &bits_restantes);
@@ -123,6 +119,5 @@ void decodificar(FILE* arquivo_codificado, FILE* arquivo_decodificado) {
         }
     }
 
-    printf("[DEBUG-DECODIFICAR] Decodificação finalizada. Bits lidos: %u\n", bits_lidos);
     liberar_arvore(raiz);
 }

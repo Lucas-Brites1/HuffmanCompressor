@@ -71,19 +71,6 @@ lista_t* criar_lista_encadeada(Tabela_de_frequencias* tabela) {
     return lista;
 }
 
-void print_lista(lista_t* lista) {
-    U16 i = 0;
-    no_arvore* atual = lista->comeco;
-    while(atual != NULL) {
-        printf("[DEBUG] atual: %p\n", (void*)atual);
-
-        printf("LISTA[%d] = (Byte: '%c' - Freq: %lu)\n", i, atual->informacao.byte, atual->informacao.frequencia);
-        atual = atual->proximo;
-        i++;
-    }
-    printf("\n");
-}
-
 no_arvore* remover_primeiro_no_lista(lista_t** lista) {
     if((*lista)->tamanho == 0) {
         printf("Lista nao possui elementos para serem removidos.");
