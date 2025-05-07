@@ -3,55 +3,46 @@
 #include <string.h>
 #include "types.h"
 
-#define CHUNK_SIZE 65536
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "types.h"
-
+#define KB 1024
+#define MB (KB*KB)
 
 U8* ler_arquivo(const char* caminho, size_t* tamanho) {
-    FILE* arquivo = fopen(caminho, "rb");
+    FILE* arquivo = fopen(caminho, "rb"); 
     if (!arquivo) {
         fprintf(stderr, "Erro ao abrir arquivo %s\n", caminho);
         return NULL;
     }
 
-    fseek(arquivo, 0, SEEK_END);
-    *tamanho = ftell(arquivo);
-    rewind(arquivo);
+    fseek(arquivo, 0, SEEK_END);         
+    *tamanho = ftell(arquivo);           
+    rewind(arquivo);                     
 
-    if (*tamanho > 100 * 1024 * 1024) { // >100MB
+    if (*tamanho > 200 * MB) {  
         fprintf(stderr, "Arquivo muito grande. Use processamento por blocos.\n");
         fclose(arquivo);
         return NULL;
     }
 
-    U8* buffer = malloc(*tamanho + 1); // +1 para segurança
+    U8* buffer = malloc(*tamanho + 1);  
     if (!buffer) {
         fclose(arquivo);
         fprintf(stderr, "Falha na alocação de %zu bytes\n", *tamanho);
         return NULL;
     }
 
-    size_t lidos = 0;
-    while (lidos < *tamanho) {
-        size_t chunk = (*tamanho - lidos) > CHUNK_SIZE ? 
-                      CHUNK_SIZE : (*tamanho - lidos);
-        size_t ret = fread(buffer + lidos, 1, chunk, arquivo);
-        if (ret != chunk) {
-            free(buffer);
-            fclose(arquivo);
-            fprintf(stderr, "Erro de leitura na posição %zu\n", lidos);
-            return NULL;
-        }
-        lidos += ret;
+    size_t lidos = fread(buffer, 1, *tamanho, arquivo);  
+    if (lidos != *tamanho) {
+        free(buffer);
+        fclose(arquivo);
+        fprintf(stderr, "Erro de leitura no arquivo.\n");
+        return NULL;
     }
-    fclose(arquivo);
 
-    buffer[*tamanho] = '\0'; // Null-terminator para segurança
+    fclose(arquivo);
+    buffer[*tamanho] = '\0';  
     return buffer;
 }
+
 
 char* pegar_extensao_arquivo(const char* caminho) {
     I8 i = 0, j = 0;

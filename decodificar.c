@@ -105,7 +105,6 @@ void decodificar(FILE* arquivo_codificado, FILE* arquivo_decodificado) {
     int bits_restantes = 0;
     U32 bits_lidos = 0;
 
-
     while (bits_lidos < total_bits) {
         int bit = ler_bit(arquivo_codificado, &byte_atual, &bits_restantes);
         if (bit == -1) break;

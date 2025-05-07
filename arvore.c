@@ -38,22 +38,6 @@ I8 eh_folha(no_arvore* raiz) {
     return(raiz->esquerda==NULL && raiz->direita==NULL);
 }
 
-void verificar_arvore(no_arvore* raiz) {
-    if (!raiz) return;
-    
-    if (eh_folha(raiz)) {
-        printf("Folha: %c (0x%02X)\n", 
-               isprint(raiz->informacao.byte) ? raiz->informacao.byte : '.',
-               raiz->informacao.byte);
-    } else {
-        if (!raiz->esquerda || !raiz->direita) {
-            printf("ERRO: Nó interno com apenas um filho!\n");
-        }
-        verificar_arvore(raiz->esquerda);
-        verificar_arvore(raiz->direita);
-    }
-}
-
 void liberar_arvore(no_arvore* raiz) {
     if (!raiz) return;
     liberar_arvore(raiz->esquerda);

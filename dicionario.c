@@ -10,6 +10,7 @@ Codigo** alocar_dicionario() {
         fprintf(stderr, "ERRO: Falha ao alocar dicionário\n");
         exit(EXIT_FAILURE);
     }
+    
     return dicionario;
 }
 
@@ -32,6 +33,7 @@ void gerar_dicionario(Codigo** dicionario_alocado, no_arvore* raiz, Codigo codig
     }
 
     Codigo codigo_esquerda, codigo_direita;
+    
     clone(codigo_atual, &codigo_esquerda);
     adiciona_bit(&codigo_esquerda, 0);
     gerar_dicionario(dicionario_alocado, raiz->esquerda, codigo_esquerda);

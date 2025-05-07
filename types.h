@@ -41,18 +41,18 @@ typedef no_arvore* Ptr_de_no_de_arvore_binaria;
 typedef struct {
     Ptr_de_no_de_arvore_binaria vetor [256];
     U16 quantidade_de_posicoes_preenchidas;
-} Tabela_de_frequencias;
+} Tabela_de_frequencias; // struct para guardar tabela de frequencias
 
 typedef struct {
     no_arvore* comeco;
     U16 tamanho;
-} lista_t;
+} lista_t; // struct de tipo lista
 
 typedef struct {
     U8* byte;
     U8  capacidade; 
     U8  tamanho; 
-} Codigo;
+} Codigo; // struct para armazenar mapeamento da arvore / codificar / decodificar
 
 Tabela_de_frequencias* nova_tabela_de_frequencias ();
 boolean inclua_byte (U8 byte, Tabela_de_frequencias* tab /* por referencia */);
@@ -65,7 +65,6 @@ no_arvore* criar_no(elemento_t* elemento);
 
 no_arvore* criar_arvore(lista_t* lista);
 I8 eh_folha(no_arvore* raiz);
-void verificar_arvore(no_arvore* raiz);
 
 Codigo** alocar_dicionario();
 void gerar_dicionario(Codigo** dicionario_alocado, no_arvore* raiz, Codigo codigo_atual);

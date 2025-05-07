@@ -5,7 +5,6 @@
 
 Tabela_de_frequencias* nova_tabela_de_frequencias ()
 {
-
     Tabela_de_frequencias* tabela = malloc(sizeof(Tabela_de_frequencias));
     if (!tabela) {
         printf("Erro de alocação de tabela\n");

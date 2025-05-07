@@ -28,12 +28,11 @@ int main(int argc, char* argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    char* extensao_arquivo = pegar_extensao_arquivo(nome_arquivo);
+    const char* extensao_arquivo = pegar_extensao_arquivo(nome_arquivo);
     const char* nome_arquivo_original = nome_arquivo;
     const char* nome_arquivo_codificado = setar_novo_nome(nome_arquivo, "huf");
     const char* nome_arquivo_decodificado = argv[3];
 
-    // Ler arquivo original
     size_t tamanho_original;
     dados_original = ler_arquivo(nome_arquivo_original, &tamanho_original);
     if (!dados_original || tamanho_original == 0) {
@@ -41,7 +40,7 @@ int main(int argc, char* argv[]) {
         limpeza_completa(dados_original, tabela, lista, arvore, dicionario, NULL);
         return EXIT_FAILURE;
     }
-    printf("Arquivo original '%s' lido com sucesso. Tamanho: %zu bytes\n", nome_arquivo_original, tamanho_original);
+    printf("\n\tArquivo '%s' lido com sucesso. Tamanho: %zu bytes\n", nome_arquivo_original, tamanho_original);
 
     // Tabela de frequências
     tabela = nova_tabela_de_frequencias();
@@ -59,7 +58,6 @@ int main(int argc, char* argv[]) {
     }
 
     // Lista encadeada
-    printf("\n=== Lista Encadeada ===\n");
     lista = criar_lista_encadeada(tabela);
     if (!lista) {
         limpeza_completa(dados_original, tabela, lista, arvore, dicionario, NULL);
@@ -67,7 +65,6 @@ int main(int argc, char* argv[]) {
     }
 
     // Árvore de Huffman
-    printf("\n=== Árvore de Huffman ===\n");
     arvore = criar_arvore(lista);
     if (!arvore) {
         limpeza_completa(dados_original, tabela, lista, arvore, dicionario, NULL);
@@ -132,7 +129,6 @@ int main(int argc, char* argv[]) {
     return EXIT_SUCCESS;
 }
 
-// Limpa todos os dados alocados
 void limpeza_completa(U8* dados, Tabela_de_frequencias* tab, lista_t* lista, no_arvore* arvore, Codigo** dicionario, Codigo* codigo) {
     printf("[DEBUG] Iniciando limpeza...\n");
 
@@ -162,7 +158,7 @@ void limpeza_completa(U8* dados, Tabela_de_frequencias* tab, lista_t* lista, no_
 char* argumentos_terminal(int argc, char** argv, char** nome_arquivo_original, char** nome_arquivo_saida) {
     if (argc < 2) return "ERRO";
 
-    if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0) {
+    if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "-help") == 0) {
         printf("Uso: ./huffman [opção] <arquivo_entrada> [arquivo_saida]\n");
         printf("  -c           Codifica o arquivo\n");
         printf("  -d           Decodifica o arquivo\n");
@@ -174,10 +170,10 @@ char* argumentos_terminal(int argc, char** argv, char** nome_arquivo_original, c
         if (argc < 3) return "ERRO";
         *nome_arquivo_original = argv[2];
         *nome_arquivo_saida = (argc >= 4) ? argv[3] : argv[2];
-        return argv[1]; // "-c" ou "-d"
+        return argv[1]; 
     }
 
     return "ERRO";
 }
 
-//gcc arvore.c main.c codificar.c codigo.c decodificar.c dicionario.c files.c lista_encadeada.c tabela_frequencias.c -o huffman
+//gcc arvore.c main.c codificar.c codigo.c decodificar.c dicionario.c files.c lista_encadeada.c tabela_frequencias.c -o arquivos/huffman
